@@ -1,31 +1,13 @@
-#version 460 core
+#version 330 core
 
-layout (location = 0) in vec2 fragPos;
+in vec2 TexCoords;
+out vec4 color;
 
-out vec4 FragColor;
+uniform sampler2D text;
+uniform vec3 textColor;
 
 void main() {
-    float halfWidth = 0.5;
-    float halfHeight = 0.5;
+    vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
 
-    // Calculate distance from edge
-    float distLeft   = abs(fragPos.x + halfWidth);
-    float distRight  = abs(fragPos.x - halfWidth);
-    float distTop    = abs(fragPos.y - halfHeight);
-    float distBottom = abs(fragPos.y + halfHeight);
-
-    float minDistX = min(distLeft, distRight);
-    float minDistY = min(distTop, distBottom);
-    float minDist  = min(minDistX, minDistY);
-
-    if (minDist < 0.1)
-    {
-        // Border color
-        FragColor = vec4(1.0, 1.0, 0.0, 1.0);
-    }
-    else
-    {
-        // Fill color
-        FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-    }
+    color = vec4(textColor, 1.0) * sampled;
 }

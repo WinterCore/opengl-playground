@@ -3,11 +3,11 @@ CFLAGS = -std=c11 -Wall -Wextra
 LDFLAGS = -Iinclude
 
 ifeq ($(OS),Darwin)
-	CFLAGS += `pkg-config --cflags glfw3`
-	LDFLAGS += `pkg-config --static --libs glfw3`
+	CFLAGS += `pkg-config --cflags glfw3 freetype2`
+	LDFLAGS += `pkg-config --static --libs glfw3 freetype2`
 else
-	CFLAGS += `pkg-config --cflags glfw3 gl`
-	LDFLAGS += `pkg-config --static --libs glfw3 gl`
+	CFLAGS += `pkg-config --cflags glfw3 gl freetype2`
+	LDFLAGS += `pkg-config --static --libs glfw3 gl freetype2`
 endif
 
 .PHONY: clean debug all
